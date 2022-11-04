@@ -10,7 +10,10 @@ results = pd.read_csv('chisel.csv')
 result = len(results)
 print(result)
 
-# THIS block of code right here appends a new header column for the "HASH" space to the csv file
+# THIS block of code right here appends a new header column for the "HASH" space to the csv file because initially there was no column for the hashed encrypted code.
+
+
+
 # op = open("chisel.csv", "r")
 # dt = csv.DictReader(op)
 # up_dt = []
@@ -34,6 +37,7 @@ print(result)
 
 
 # This block of code creates a json array and stores in the the hash column
+
 op = open("chisel.csv", "r")
 dt = csv.DictReader(op)
 up_dt = []
@@ -87,12 +91,11 @@ op.close()
 df = pd.read_csv("chisel.csv")
 hash = df['HASH']
 num = df['Series Number']
-for x,y in zip(hash, num):
-    up = json.dumps(x)
+for x,y in enumerate(hash):
+    up = json.dumps(y)
     ory = hashlib.sha256(up.encode('utf-8'))
     str_hex = ory.hexdigest()
-    df.loc[y, 'HASH'] = str_hex
-
+    df.loc[x, 'HASH'] = str_hex
     # writing into the file
-    df.to_csv("chisel.csv", index=False)
+    df.to_csv('chisel.csv', index=False)
     
